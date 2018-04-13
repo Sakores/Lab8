@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Abstract Art Generator!</title>
+  <script>
+      function artGenerator () {
+          var canvas = document.getElementById('artCanvas');
+          var context = canvas.getContext('2d');
+
+          //clear canvas
+          fillBackgroundColor(canvas, context);
+
+          //draw shapes
+          var colors =['red', 'blue','green','yellow','white', 'purple', 'pink'];
+          for (var i=0; i<20; i++) {
+            var j = Math.floor(Math.random() * 2);
+            if(j == 0)
+            {
+          var color= colors[Math.floor(Math.random() * colors.length)];
+          drawCircle(canvas,context,color);
+        }
+         else
+         {
+          var color= colors[Math.floor(Math.random() * colors.length)];
+          drawSquare(canvas,context,color)
+        }
+        }
+          //generate random title
+          var title = makeTitle();
+
+          //draw the title
+          drawText(canvas,context,title);
+      }
+
+      function drawSquare(canvas,context,color){
+        var x = Math.floor(Math.random() * canvas.width);
+        var y = Math.floor(Math.random() * canvas.height);
+        var size = Math.floor(Math.random() * 40);
+        context.fillRect(x,y, size, size);
+      }
+
+
+      function drawText(canvas,context,title) {
+        context.fillStyle = 'black';
+        context.font = 'bold lem sans-serif';
+        context.textAlign = 'right';
+        context.fillText(title, canvas.width-20, canvas.height-40);
+      }
+
+      function makeTitle() {
+        var lines = [['Uninspired', 'Funky', 'Despairing', 'Groovy', 'Long', 'Quiet','Distraught', 'Forbidden', 'Dark'],['Elephant', 'Man', 'Lovers', 'Child', 'Boy', 'Dreamers', 'Bubbles', 'Dreams'], ['I', 'II','III', 'IV', 'V']];
+        var title = '';
+        for (var i=0; i<lines.length; i++){
+          var random = Math.floor(Math.random() * lines[i].length);
+          title += lines[i][random]+ ' ';
+        }
+        return title;
+      }
+
+
+      function degreesToRadians(degrees){
+          return (degrees * Math.PI)/180;
+      }
+      function drawCircle(canvas, context, color){
+        var radius = Math.floor(Math.random() * 40); //randomizes radius
+        var x = Math.floor(Math.random() * canvas.width); //randomizes x
+        var y = Math.floor(Math.random() * canvas.height); // randomizes y
+        context.beginPath();
+        context.arc(x, y, radius, 0, degreesToRadians(360), true);//Mathstuffs
+        context.fillStyle = color; //chooses random color
+        context.fill(); //fills in the path
+      }
+
+      function fillBackgroundColor(canvas, context) {
+          var colors = ['red', 'blue','green','yellow','pink'];
+          var color = colors[Math.floor(Math.random() * colors.length)];
+          context.fillStyle = color;
+          context.fillRect(0,0,canvas.width,canvas.height);
+      }
+      window.onload = function() {
+        var button = document.getElementById('artButton');
+        button.onclick = artGenerator;
+
+      }
+
+
+  </script>
+</head>
+<body>
+    <canvas id="artCanvas" width="600" height="200"></canvas>
+    <input type="button" id="artButton" value="New Art"></input>
+</body>
+</html>
